@@ -34,7 +34,6 @@ class Dashboard extends CI_Controller {
 		if($this->upload->do_upload()) {
 			$upload = $this->upload->data();
 			$message = "File uploaded: " . $upload['file_name'];
-			
 			// Insert file into database
 			$this->receipts->newUploadedReceipt($upload['full_path']);
 		} else {
