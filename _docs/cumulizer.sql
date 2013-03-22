@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.14)
 # Datenbank: cumulizer
-# Erstellungsdauer: 2013-03-22 13:24:13 +0000
+# Erstellungsdauer: 2013-03-22 13:34:45 +0000
 # ************************************************************
 
 
@@ -99,6 +99,20 @@ CREATE TABLE `stores` (
   `address` varchar(2048) DEFAULT NULL,
   `lat` float DEFAULT NULL,
   `lon` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Export von Tabelle users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(256) NOT NULL DEFAULT '',
+  `password` varchar(256) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
