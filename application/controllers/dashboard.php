@@ -24,8 +24,6 @@ class Dashboard extends CI_Controller {
 	
 	public function simpleupload()
 	{
-		$message = NULL;
-		
 		// Check for upload
 		$config = array();
 		$config['upload_path'] = sys_get_temp_dir() . '/';
@@ -35,7 +33,10 @@ class Dashboard extends CI_Controller {
 		
 		if($this->upload->do_upload()) {
 			$upload = $this->upload->data();
-			$message = "File uploaded: " . $upload['full_path'];
+			$message = "File uploaded: " . $upload['file_name'];
+			
+			// Insert file into database
+			$this->receipts->newUploadedReceipt($upload['full_path']);
 		} else {
 			$message = $this->upload->display_errors();
 		}
