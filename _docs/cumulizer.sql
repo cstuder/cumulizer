@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.14)
 # Datenbank: cumulizer
-# Erstellungsdauer: 2013-03-22 13:34:45 +0000
+# Erstellungsdauer: 2013-03-22 14:49:32 +0000
 # ************************************************************
 
 
@@ -43,7 +43,7 @@ CREATE TABLE `categories` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `categoryname` varchar(256) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
@@ -76,12 +76,12 @@ CREATE TABLE `items` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `userid` int(11) unsigned NOT NULL,
   `transaction` int(11) unsigned NOT NULL,
-  `datetime` datetime NOT NULL,
+  `datetime` datetime NOT NULL COMMENT 'Lokalzeit',
   `itemname` varchar(256) NOT NULL DEFAULT '',
   `quantity` decimal(32,3) NOT NULL DEFAULT '1.000',
   `price` decimal(32,2) NOT NULL,
   `discount` decimal(32,2) DEFAULT NULL,
-  `categoryid` int(11) unsigned NOT NULL,
+  `categoryid` int(11) unsigned DEFAULT NULL,
   `storeid` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -113,9 +113,19 @@ CREATE TABLE `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(256) NOT NULL DEFAULT '',
   `password` varchar(256) NOT NULL DEFAULT '',
+  `email` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`)
+VALUES
+	(1,'cstuder','a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',NULL);
+
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
