@@ -21,6 +21,27 @@ class Dashboard extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+	
+	public function simpleupload()
+	{
+		$message = NULL;
+		
+		// Check for upload
+		$config = array();
+		$config['upload_path'] = sys_get_temp_dir() . '/';
+		$config['allowed_types'] = 'csv';
+		$config['max_size']	= '100';
+		$this->load->library('upload', $config);
+		
+		if($this->upload->do_upload()) {
+			$upload = $this->upload->data();
+			$message = "File uploaded: " . $upload['full_path'];
+		} else {
+			$message = $this->upload->display_errors();
+		}
+		
+		$this->load->view('simpleuploadform.php', array('message' => $message));
+	}
 }
 
 /* End of file welcome.php */
