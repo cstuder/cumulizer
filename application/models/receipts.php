@@ -8,6 +8,13 @@ class Receipts extends CI_Model {
 	protected $temporaryUserID = 1;
 	
 	/**
+     * Database datetime format
+     * 
+     * @var string
+	 */
+	protected $datetimeformat = 'Y-m-d H:i:s';
+	
+	/**
 	 * New uploaded receipt
 	 * 
 	 * - Open file
@@ -27,19 +34,11 @@ class Receipts extends CI_Model {
 	 * @return array
 	 */
 	public function getMonthlyPurchases($year, $month) {
-		$purchases = array();
+		$startdate = "{$year}-{$month}-01 00:00:00";
+		$enddate = date($this->datetimeformat, strtotime("{$startdate} + 1 month"));
+		$query = $this->db->query("SELECT datetime, itemname, quantity, discount, price, categoryid FROM items WHERE userid = ? AND datetime BETWEEN ? AND ?", array($this->temporaryUserID, $startdate, $enddate));
 		
-		// TODO finish this
-		
-		// Mock data
-		$purchases[] = array('datetime' => strtotime('2011-05-27 20:28:00'), 'itemname' => 'MB KARTOFFELGNOCCHI  700G', 'quantity' => 1, 'discount' => 0, 'price' => 2.75, 'categoryid' => 10);
-		$purchases[] = array('datetime' => strtotime('2011-05-27 20:28:00'), 'itemname' => 'AGNESI ELICHE', 'quantity' => 1, 'discount' => 0.45, 'price' => 1.6, 'categoryid' => 10);
-		$purchases[] = array('datetime' => strtotime('2011-05-27 20:28:00'), 'itemname' => 'BIO ITALIEN.SALAMI   MAXI', 'quantity' => 0.102, 'discount' => 1.05, 'price' => 4.15, 'categoryid' => 10);
-		$purchases[] = array('datetime' => strtotime('2011-05-27 20:28:00'), 'itemname' => ';M-CLAS MAYONNAISE 170G TB', 'quantity' => 1, 'discount' => 0, 'price' => 1.30, 'categoryid' => 2);
-		$purchases[] = array('datetime' => strtotime('2011-05-27 20:28:00'), 'itemname' => 'M-CLAS COTTAGE CHEESE NAT', 'quantity' => 1, 'discount' => 0, 'price' => 1.60, 'categoryid' => 9);
-		$purchases[] = array('datetime' => strtotime('2011-05-27 20:28:00'), 'itemname' => 'GURKEN TP         ST S.', 'quantity' => 1, 'discount' => 0, 'price' => 1.60, 'categoryid' => 9);
-		
-		return $purchases;
+		return $query->result();
 	}
 	
 	/**
@@ -48,11 +47,17 @@ class Receipts extends CI_Model {
 	 * @param int $startyear
 	 * @param int $startmonth
 	 * @param int $numberOfMonths
+	 * @return array
 	 */
 	public function action_spendings($startyear, $startmonth, $numberOfMonths) {
 		$spendings = array();
 		
-		// TODO finish this
+		$startdate = "{$startyear}-{$startmonth}-01 00:00:00";
+		$enddate = date($this->datetimeformat, strtotime("{$startdate} + {$numberOfMonths} months"));
+		
+		$query = $this->db->query("SELECT sum(price) as pricesum, categoryid, EXTRACT(YEAR FROM `datetime`) as year, EXTRACT(MONTH FROM `datetime`) as month FROM items WHERE userid=? AND datetime BETWEEN ? AND ? GROUP BY month, year, categoryid", array($this->temporaryUserID, $startdate, $enddate));
+		
+		// TODO continue here
 		
 		// Mock data
 		$spendings[] = array(10 => 22.30, 3 => 11.40);
@@ -75,6 +80,7 @@ class Receipts extends CI_Model {
 	 * Get a summary of the purchases of this year
 	 * 
 	 * @param int $year
+	 * @return array
 	 */
 	public function getYearlySummary($year) {
 		$summary = array();
@@ -91,5 +97,21 @@ class Receipts extends CI_Model {
 		);
 		
 		return $summary;
+	}
+	
+	/**
+	 * Get all categories
+	 * 
+	 * @return array
+	 */
+	public function getCategories() {
+		$categories = array();
+		
+		$query = $this->db->get('categories');
+		foreach($query->result() as $row) {
+			$categories[$row->id] = $row->categoryname;
+		}
+		
+		return $categories;
 	}
 }
