@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Checks to see if the user is attempting to access a valid file,
+    # such as an image or css document, if this isn't true it sends the
+    # request to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond $1#%{REQUEST_URI} ([^#]*)#(.*?)\1$
+    RewriteRule ^(.*)$ %2index.php/$1 [QSA,L]
+</IfModule>
