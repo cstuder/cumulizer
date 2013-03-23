@@ -28,9 +28,12 @@ DROP TABLE IF EXISTS `autocategorizations`;
 CREATE TABLE `autocategorizations` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `categoryid` int(11) unsigned NOT NULL,
-  `itemname` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `itemname` varchar(150) NOT NULL DEFAULT '',
+  `votes` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `item_category_idx` (`itemname`,`categoryid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 
 
 
