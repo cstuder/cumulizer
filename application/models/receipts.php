@@ -90,7 +90,6 @@ class Receipts extends CI_Model {
 						'quantity' => $value['Menge'],
 						'discount' => $value['Rabatt'],
 						'price' => $value['Umsatz'],
-						'categoryid' => 0,
 						'userid' => $userid
 					);
 					$this->db->insert('items', $data);
@@ -111,15 +110,48 @@ class Receipts extends CI_Model {
 		$startdate = "{$year}-{$month}-01 00:00:00";
 		$enddate = date($this->datetimeformat, strtotime("{$startdate} + 1 month"));
 		$query = $this->db->query("
-		    SELECT items.datetime, items.quantity, items.discount, items.price, items.categoryid, product.itemname
+		    SELECT items.datetime, items.quantity, items.discount, items.price, items.product AS productid, product.itemname
 		    FROM items
 		    INNER JOIN product ON (product.id = items.product)
 		    WHERE userid = ? AND datetime BETWEEN ? AND ?",
             array($this->temporaryUserID, $startdate, $enddate)
         );
-		
-		return $query->result();
+
+        $items = $query->result();
+        $productIds = array();
+        foreach ($items as $item) {
+            $productIds[] = $item->productid;
+        }
+        $categories = $this->getProductCategories($productIds);
+
+        $indexedCategories = array();
+        foreach ($categories AS $category) {
+            $productId = $category->productid;
+            $indexedCategories[$productId] = $category->categoryid;
+        }
+
+        foreach ($items as &$item) {
+            $item->category = 0;
+            $productId = $item->productid;
+            if (isset($indexedCategories[$productId])) {
+                $item->category = $indexedCategories[$productId];
+            }
+        }
+
+		return $items;
 	}
+
+    public function getProductCategories(array $productIds)
+    {
+        $query = $this->db->query("
+            SELECT *, MAX(votes)
+            FROM autocategorizations
+            WHERE productid IN (" . implode(', ', $productIds) . ")
+            GROUP BY productid, categoryid
+        ");
+
+        return $query->result();
+    }
 	
 	/**
 	 * Get a sum of all purchases per month and category
@@ -203,28 +235,23 @@ class Receipts extends CI_Model {
 
     public function getUncategorizedItems() {
         $query = $this->db->query("
-            SELECT DISTINCT product.itemname
+            SELECT DISTINCT product.itemname, product.id AS productid
             FROM product
-            LEFT JOIN autocategorizations ON (autocategorizations.itemname = product.itemname)
+            LEFT JOIN autocategorizations ON (autocategorizations.productid = product.id)
             WHERE autocategorizations.id IS NULL
         ");
 
-        $uncategorizedItemnames = array();
-        foreach($query->result() as $row) {
-            $uncategorizedItemnames[] = $row->itemname;
-        }
-
-        return $uncategorizedItemnames;
+        return $uncategorizedItems = $query->result();
     }
 
     public function saveVotes(array $votes) {
         foreach ($votes as $vote) {
             $this->db->query("
                 INSERT INTO autocategorizations
-                    (categoryid, itemname, votes)
+                    (categoryid, productid, votes)
                 VALUES
                     (" . (int)$vote['categoryId'] . ",
-                    '" . $this->db->escape_str($vote['itemName']) . "',
+                    " . (int)$vote['productId'] . ",
                     " . (int)$vote['votes'] . ")
                 ON DUPLICATE KEY UPDATE
                     votes=votes+" . (int)$vote['votes']

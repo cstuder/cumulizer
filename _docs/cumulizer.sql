@@ -25,15 +25,14 @@ USE cumulizer;
 
 DROP TABLE IF EXISTS `autocategorizations`;
 
-CREATE TABLE IF NOT EXISTS `autocategorizations` (
+CREATE TABLE `autocategorizations` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `categoryid` int(11) unsigned NOT NULL,
-  `itemname` varchar(150) NOT NULL DEFAULT '',
+  `productid` int(10) unsigned NOT NULL,
   `votes` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `item_category_idx` (`itemname`,`categoryid`)
+  UNIQUE KEY `item_category_idx` (`productid`,`categoryid`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
-
 
 
 
@@ -84,7 +83,6 @@ CREATE TABLE `items` (
   `quantity` decimal(32,3) NOT NULL DEFAULT '1.000',
   `price` decimal(32,2) NOT NULL,
   `discount` decimal(32,2) DEFAULT NULL,
-  `categoryid` int(11) unsigned DEFAULT NULL,
   `storeid` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
