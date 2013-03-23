@@ -32,7 +32,7 @@ class Dashboard extends CI_Controller {
 		$config = array();
 		$config['upload_path'] = sys_get_temp_dir() . '/';
 		$config['allowed_types'] = 'csv';
-		$config['max_size']	= '100';
+		$config['max_size']	= '2048';
 		$this->load->library('upload', $config);
 		
 		if($this->upload->do_upload()) {
