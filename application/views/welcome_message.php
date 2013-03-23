@@ -82,7 +82,7 @@
 	
 	<div class="row-fluid">
 		
-		<iframe src="dashboard/heatmap" width="100%" height="400" frameborder="0"></iframe>
+		<iframe src="dashboard/heatmap" width="100%" height="740" frameborder="0"></iframe>
 		
 		<!--<div id="chart-spending-pie">
 		  <svg></svg>

@@ -23,12 +23,15 @@ body {
 
 /* Main message and sign up button */
 .jumbotron {
-	margin: 60px 0;
+	margin: 0;
 	text-align: center;
 }
 .jumbotron h1 {
 	font-size: 72px;
 	line-height: 1;
+	background: url(http://farm9.staticflickr.com/8148/7269286468_a932e1653b_k.jpg) no-repeat center;
+	padding-top: 157px;
+	color: white;
 }
 .jumbotron .btn {
 	font-size: 21px;
@@ -50,17 +53,4 @@ body {
 
 .dashboard svg {
   height: 300px;
-}
-
-.category {
-    background-color: #fff;
-    padding: 1em;
-    border-radius: 1em;
-    min-height: 140px;
-    text-align: center;
-    cursor: pointer;
-}
-
-#voteProductName {
-    font-weight: bold;
 }
