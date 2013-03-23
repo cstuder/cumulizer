@@ -11,7 +11,7 @@ $('button.close').click(function() {
 });
 
 $.get('index.php/api?action=categories', function(data) {
-return;
+	return;
 	var chartdata = [ { key: "Categories", values: [] } ];
 	
 	for (var i = 2; i < 12; i++) {
@@ -20,8 +20,6 @@ return;
 			"value": Math.random() * 100
 		});
 	}
-	
-	console.log(data[2]);
 	
 	nv.addGraph(function() {
 	  var chart = nv.models.pieChart()
