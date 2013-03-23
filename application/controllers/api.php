@@ -76,6 +76,14 @@ class Api extends CI_Controller {
 		
 		return $this->receipts->getMonthlySpendings($year, $month, $numberOfMonths);
 	}
+	
+	/**
+	 * Get all categories
+	 * 
+	 */
+	public function action_categories() {
+		return $this->receipts->getCategories();
+	}
 
 	/**
 	 * Helper method: Output data as JSON
