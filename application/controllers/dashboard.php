@@ -1,7 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-use Guzzle\Http\Client;
-
 class Dashboard extends CI_Controller {
 
 	/**
