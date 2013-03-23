@@ -26,6 +26,15 @@ $(document).ready(function() {
 	    var heatmap = new L.TileLayer.HeatCanvas({},{
 	    	'radius': 5
 	    });
+
+	    heatmap.onRenderingStart(function(){
+            document.getElementById("status").innerHTML =
+        'Rendering';  
+        });
+        
+        heatmap.onRenderingEnd(function(){
+            document.getElementById("status").innerHTML = '';  
+        });
 	    
 		$.each(data, function(index, value) {
 			if(value.lat != null && value.lon != null) {	
@@ -40,6 +49,6 @@ $(document).ready(function() {
 </script>
 
 <div id="heatmap" style="width: 1024px; height: 700px;"></div>
-
+<div id="status" style="color:#F00;"></div>
 <?php
 $this->load->view('_footer');
