@@ -10,6 +10,35 @@ $('button.close').click(function() {
 	return false;
 });
 
+$.get('index.php/api?action=categories', function(data) {
+return;
+	var chartdata = [ { key: "Categories", values: [] } ];
+	
+	for (var i = 2; i < 12; i++) {
+		chartdata[0].values.push({
+			"label": data[i],
+			"value": Math.random() * 100
+		});
+	}
+	
+	console.log(data[2]);
+	
+	nv.addGraph(function() {
+	  var chart = nv.models.pieChart()
+		  .x(function(d) { return d.label })
+		  .y(function(d) { return d.value })
+		  .showLabels(true);
+
+		d3.select("#chart-spending-pie svg")
+		    .datum(chartdata)
+		  .transition().duration(1200)
+		    .call(chart);
+
+	  return chart;
+	});
+
+});
+
 $.get('index.php/api?action=spendings&year=2012&month=1', function(data) {
 
 	var spendings = [];
@@ -36,7 +65,7 @@ $.get('index.php/api?action=spendings&year=2012&month=1', function(data) {
 	  chart.yAxis
 		  .tickFormat(d3.format(',.2f'));
 
-	  d3.select('#chart svg')
+	  d3.select('#chart-spending-stacked svg')
 		.datum(chartdata)
 		  .transition().duration(500).call(chart);
 
@@ -46,24 +75,3 @@ $.get('index.php/api?action=spendings&year=2012&month=1', function(data) {
 	});
 
 });
-
-$('.category').click(function(event) {
-    var productId = $('#voteProductName').data('productid'),
-        categoryId = $(this).data('categoryid');
-
-    $.get('dashboard/vote?productid=' + productId + '&categoryid=' + categoryId);
-
-    refreshCategoryVoteProduct();
-});
-
-function refreshCategoryVoteProduct() {
-    $.get('dashboard/getCategoryVoteData', function(data) {
-        $('#voteProductName').data('productid', data.product.id).text(data.product.name);
-
-        $('#categorySuggestion1 h5').data('categoryid', data.categories[0].id).text(data.categories[0].name);
-        $('#categorySuggestion2 h5').data('categoryid', data.categories[1].id).text(data.categories[1].name);
-        $('#categorySuggestion3 h5').data('categoryid', data.categories[2].id).text(data.categories[2].name);
-    });
-}
-
-refreshCategoryVoteProduct();
