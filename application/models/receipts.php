@@ -25,28 +25,45 @@ class Receipts extends CI_Model {
 	public function newUploadedReceipt($filename) {
 		$this->load->library('csvreader');
 		$content = $this->csvreader->parse_file($filename);
+		$userid = 1;
 
 		// ﻿Datum;Zeit;Filiale;Kassennummer;Transaktionsnummer;Artikel;Menge;Rabatt;Umsatz
 		// 28.07.12,11:42,Bern - Marktgasse,34710,5752,CREA D'OR ASSORT. DELUXE,1.000,0.00,7.70
 		// datetime (0,1) storeid (2, prov 1) transaction (4) itemname (5) quantity (6) discount (7) price (8) categoryid (x, prov 0) userid (y, prov 1)
 
+		$count = 0;
 		foreach ($content as $value){
-			// var_dump($value); die();
-			$date = explode ('.', $value['﻿Datum']);
-			// datetime: e.g. 2012-03-22 18:09:59
-			$datetime = "20".$date[2]."-".$date[1]."-".$date[0]." ".$value['Zeit'].":00";
-			$data = array(
-				'datetime' => $datetime,
-				'storeid' => 1,
-				'transaction' => $value['Transaktionsnummer'],
-				'itemname' => $value['Artikel'],
-				'quantity' => $value['Menge'],
-				'discount' => $value['Rabatt'],
-				'price' => $value['Umsatz'],
-				'categoryid' => 0,
-				'userid' => 1
-			);
-			$this->db->insert('items', $data);
+			$transaction0 = 0;
+			// only real items (no cumulus points etc.)
+			if(floatval($value['Umsatz']) > 0){
+				// read only unique receipts
+				$transaction1 = $value['Transaktionsnummer'];
+				if($transaction0 != $transaction1){
+					$array = array('userid' => $userid, 'transaction' => $transaction1);
+					$this->db->where($array); 
+					$this->db->from('items');
+					$count = $this->db->count_all_results();
+					$transaction0 = $transaction1;
+				}
+				if($count == 0){
+					// var_dump($value); die();
+					$date = explode ('.', $value['﻿Datum']);
+					// datetime: e.g. 2012-03-22 18:09:59
+					$datetime = "20".$date[2]."-".$date[1]."-".$date[0]." ".$value['Zeit'].":00";
+					$data = array(
+						'datetime' => $datetime,
+						'storeid' => 1,
+						'transaction' => $value['Transaktionsnummer'],
+						'itemname' => $value['Artikel'],
+						'quantity' => $value['Menge'],
+						'discount' => $value['Rabatt'],
+						'price' => $value['Umsatz'],
+						'categoryid' => 0,
+						'userid' => $userid
+					);
+					$this->db->insert('items', $data);
+				}
+			}
 		}
 
 		return $content; // comma separated
