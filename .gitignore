@@ -1,3 +1,4 @@
+.api.php.swp
 
 .buildpath
 
@@ -5,6 +6,7 @@
 
 .settings/*
 
-/components
+/composer.phar
+/composer.lock
 
 /vendor

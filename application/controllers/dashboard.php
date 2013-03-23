@@ -1,7 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-use Guzzle\Http\Client;
-
 class Dashboard extends CI_Controller {
 
 	/**
@@ -24,13 +22,17 @@ class Dashboard extends CI_Controller {
 		$this->load->view('welcome_message');
 	}
 	
+	/**
+	 * Shows a simple upload form to add single files to the database
+	 * 
+	 */
 	public function simpleupload()
 	{
 		// Check for upload
 		$config = array();
 		$config['upload_path'] = sys_get_temp_dir() . '/';
 		$config['allowed_types'] = 'csv';
-		$config['max_size']	= '100';
+		$config['max_size']	= '2048';
 		$this->load->library('upload', $config);
 		
 		if($this->upload->do_upload()) {
@@ -42,7 +44,15 @@ class Dashboard extends CI_Controller {
 			$message = $this->upload->display_errors();
 		}
 		
-		$this->load->view('simpleuploadform.php', array('message' => $message));
+		$this->load->view('simpleuploadform', array('message' => $message));
+	}
+	
+	/**
+	 * Shows a heatmap with the sales
+	 */
+	public function heatmap()
+	{
+		$this->load->view('heatmap');
 	}
 }
 

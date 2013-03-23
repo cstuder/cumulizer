@@ -25,12 +25,15 @@ USE cumulizer;
 
 DROP TABLE IF EXISTS `autocategorizations`;
 
-CREATE TABLE `autocategorizations` (
+CREATE TABLE IF NOT EXISTS `autocategorizations` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `categoryid` int(11) unsigned NOT NULL,
-  `itemname` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `itemname` varchar(150) NOT NULL DEFAULT '',
+  `votes` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `item_category_idx` (`itemname`,`categoryid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
+
 
 
 
@@ -77,7 +80,7 @@ CREATE TABLE `items` (
   `userid` int(11) unsigned NOT NULL,
   `transaction` int(11) unsigned NOT NULL,
   `datetime` datetime NOT NULL COMMENT 'Lokalzeit',
-  `itemname` varchar(256) NOT NULL DEFAULT '',
+  `product` int(10) unsigned NOT NULL,
   `quantity` decimal(32,3) NOT NULL DEFAULT '1.000',
   `price` decimal(32,2) NOT NULL,
   `discount` decimal(32,2) DEFAULT NULL,
@@ -86,6 +89,15 @@ CREATE TABLE `items` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+DROP TABLE IF EXISTS `product`;
+
+CREATE TABLE `product` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `itemname` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ;
 
 
 # Export von Tabelle stores

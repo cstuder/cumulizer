@@ -67,11 +67,26 @@ class Receipts extends CI_Model {
 					$date = explode ('.', $value['﻿Datum']);
 					// datetime: e.g. 2012-03-22 18:09:59
 					$datetime = "20".$date[2]."-".$date[1]."-".$date[0]." ".$value['Zeit'].":00";
+
+                    $query = $this->db->query("
+                        SELECT *
+                        FROM product
+                        WHERE itemname = '" . $this->db->escape_str($value['Artikel']) . "'
+                    ");
+
+                    if ($query->num_rows() > 0) {
+                        $product = $query->row();
+                        $productId = $product->id;
+                    } else {
+                        $this->db->insert('product', array('itemname' => $value['Artikel']));
+                        $productId = $this->db->insert_id();
+                    }
+
 					$data = array(
 						'datetime' => $datetime,
 						'storeid' => $storeid,
 						'transaction' => $value['Transaktionsnummer'],
-						'itemname' => $value['Artikel'],
+						'product' => $productId,
 						'quantity' => $value['Menge'],
 						'discount' => $value['Rabatt'],
 						'price' => $value['Umsatz'],
@@ -95,7 +110,13 @@ class Receipts extends CI_Model {
 	public function getMonthlyPurchases($year, $month) {
 		$startdate = "{$year}-{$month}-01 00:00:00";
 		$enddate = date($this->datetimeformat, strtotime("{$startdate} + 1 month"));
-		$query = $this->db->query("SELECT datetime, itemname, quantity, discount, price, categoryid FROM items WHERE userid = ? AND datetime BETWEEN ? AND ?", array($this->temporaryUserID, $startdate, $enddate));
+		$query = $this->db->query("
+		    SELECT items.datetime, items.quantity, items.discount, items.price, items.categoryid, product.itemname
+		    FROM items
+		    INNER JOIN product ON (product.id = items.product)
+		    WHERE userid = ? AND datetime BETWEEN ? AND ?",
+            array($this->temporaryUserID, $startdate, $enddate)
+        );
 		
 		return $query->result();
 	}
@@ -169,7 +190,7 @@ class Receipts extends CI_Model {
 		
 		return $categories;
 	}
-	
+
 	/**
 	 * Get all stores and their sales there
 	 * 
@@ -179,4 +200,35 @@ class Receipts extends CI_Model {
 		$query = $this->db->query('SELECT stores.storename, stores.lat, stores.lon, sum(items.price) as sales FROM stores, items WHERE stores.id=items.storeid GROUP BY items.storeid');
 		return $query->result();
 	}
+
+    public function getUncategorizedItems() {
+        $query = $this->db->query("
+            SELECT DISTINCT product.itemname
+            FROM product
+            LEFT JOIN autocategorizations ON (autocategorizations.itemname = product.itemname)
+            WHERE autocategorizations.id IS NULL
+        ");
+
+        $uncategorizedItemnames = array();
+        foreach($query->result() as $row) {
+            $uncategorizedItemnames[] = $row->itemname;
+        }
+
+        return $uncategorizedItemnames;
+    }
+
+    public function saveVotes(array $votes) {
+        foreach ($votes as $vote) {
+            $this->db->query("
+                INSERT INTO autocategorizations
+                    (categoryid, itemname, votes)
+                VALUES
+                    (" . (int)$vote['categoryId'] . ",
+                    '" . $this->db->escape_str($vote['itemName']) . "',
+                    " . (int)$vote['votes'] . ")
+                ON DUPLICATE KEY UPDATE
+                    votes=votes+" . (int)$vote['votes']
+            );
+        }
+    }
 }
