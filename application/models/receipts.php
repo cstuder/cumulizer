@@ -46,11 +46,26 @@ class Receipts extends CI_Model {
 					$date = explode ('.', $value['﻿Datum']);
 					// datetime: e.g. 2012-03-22 18:09:59
 					$datetime = "20".$date[2]."-".$date[1]."-".$date[0]." ".$value['Zeit'].":00";
+
+                    $query = $this->db->query("
+                        SELECT *
+                        FROM product
+                        WHERE itemname = '" . $this->db->escape_str($value['Artikel']) . "'
+                    ");
+
+                    if ($query->num_rows() > 0) {
+                        $product = $query->row();
+                        $productId = $product->id;
+                    } else {
+                        $this->db->insert('product', array('itemname' => $value['Artikel']));
+                        $productId = $this->db->insert_id();
+                    }
+
 					$data = array(
 						'datetime' => $datetime,
 						'storeid' => 1,
 						'transaction' => $value['Transaktionsnummer'],
-						'itemname' => $value['Artikel'],
+						'product' => $productId,
 						'quantity' => $value['Menge'],
 						'discount' => $value['Rabatt'],
 						'price' => $value['Umsatz'],
@@ -161,11 +176,10 @@ class Receipts extends CI_Model {
 
     public function getUncategorizedItems() {
         $query = $this->db->query("
-            SELECT DISTINCT items.itemname
-            FROM items
-            LEFT JOIN autocategorizations ON (autocategorizations.itemname = items.itemname)
-            WHERE items.categoryid = 0
-            AND autocategorizations.id IS NULL
+            SELECT DISTINCT product.itemname
+            FROM product
+            LEFT JOIN autocategorizations ON (autocategorizations.itemname = product.itemname)
+            WHERE autocategorizations.id IS NULL
         ");
 
         $uncategorizedItemnames = array();
