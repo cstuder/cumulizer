@@ -47,3 +47,24 @@ $.get('index.php/api?action=spendings&year=2012&month=1', function(data) {
 	});
 
 });
+
+$('.category').click(function(event) {
+    var productId = $('#voteProductName').data('productid'),
+        categoryId = $(this).data('categoryid');
+
+    $.get('dashboard/vote?productid=' + productId + '&categoryid=' + categoryId);
+
+    refreshCategoryVoteProduct();
+});
+
+function refreshCategoryVoteProduct() {
+    $.get('dashboard/getCategoryVoteData', function(data) {
+        $('#voteProductName').data('productid', data.product.id).text(data.product.name);
+
+        $('#categorySuggestion1 h5').data('categoryid', data.categories[0].id).text(data.categories[0].name);
+        $('#categorySuggestion2 h5').data('categoryid', data.categories[1].id).text(data.categories[1].name);
+        $('#categorySuggestion3 h5').data('categoryid', data.categories[2].id).text(data.categories[2].name);
+    });
+}
+
+refreshCategoryVoteProduct();

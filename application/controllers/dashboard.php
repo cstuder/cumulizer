@@ -54,6 +54,39 @@ class Dashboard extends CI_Controller {
 	{
 		$this->load->view('heatmap');
 	}
+
+    public function vote()
+    {
+        if (!$this->input->get('productid') || $this->input->get('categoryid') === false) {
+            return show_error('Bad Parameters', 400);
+        }
+
+        $this->receipts->saveVotes(array(array(
+            'categoryId' => $this->input->get('categoryId'),
+            'productId' => $this->input->get('productId'),
+            'votes' => 1
+        )));
+    }
+
+    public function getCategoryVoteData()
+    {
+        $product = $this->receipts->getRandomProduct();
+
+        $output = array('product' => array(
+            'name' => $product->itemname,
+            'id' => $product->id
+        ));
+        $output['categories'] = array();
+
+        $categories = $this->receipts->getCategories();
+        $randomCategoryIds = array_rand($categories, 3);
+
+        foreach ($randomCategoryIds as $categoryId) {
+            $output['categories'][] = array('id' => $categoryId, 'name' => $categories[$categoryId]);
+        }
+
+        $this->load->view('json', array('payload' => $output));
+    }
 }
 
 /* End of file welcome.php */

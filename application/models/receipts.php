@@ -223,6 +223,10 @@ class Receipts extends CI_Model {
 		return $categories;
 	}
 
+    public function getRandomProduct() {
+        return $this->db->order_by('*', 'random')->get('product')->row();
+    }
+
 	/**
 	 * Get all stores and their sales there
 	 * 

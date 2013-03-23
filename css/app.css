@@ -42,3 +42,12 @@ body {
 #chart svg {
   height: 400px;
 }
+
+.category {
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 1em;
+    min-height: 140px;
+    text-align: center;
+    cursor: pointer;
+}

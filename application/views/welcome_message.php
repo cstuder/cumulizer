@@ -66,6 +66,31 @@
 
       </div>
 
+      <div class="row-fluid well">
+          <h4>Categorize Products</h4>
+          <p>The productnames that Migros delivers in the CSV-Download look the same as the ones you see on your actual receipt. Like on your receipt, we can't always understand what the product we supposedly bought actually is. Accordingly, we're not able to categorize a lot of the imported products.</p>
+          <p>You can help us with that by clicking on the category you think this product belongs to below.</p>
+          <div class="row-fluid lead">The product <span id="voteProductName" data-productid=""></span> belongs into the category:</div>
+          <div class="row-fluid">
+              <div class="span3 category" id="categorySuggestion1" data-categoryid="1">
+                  <img src="http://public.api.migipedia.ch/de/image/category/O/1.jpg" />
+                  <h5></h5>
+              </div>
+              <div class="span3 category" id="categorySuggestion2" data-categoryid="2">
+                  <img src="http://public.api.migipedia.ch/de/image/category/O/1774.jpg" />
+                  <h5></h5>
+              </div>
+              <div class="span3 category" id="categorySuggestion3" data-categoryid="3">
+                  <img src="http://public.api.migipedia.ch/de/image/category/O/1414.jpg" />
+                  <h5></h5>
+              </div>
+              <div class="span3 category" id="categorySuggestionOther" data-categoryid="0">
+                  ?
+                  <h5>Something else</h5>
+              </div>
+          </div>
+      </div>
+
       <hr>
       
       <div class="row-fluid dashboard">
