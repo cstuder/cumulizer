@@ -88,17 +88,36 @@ class Receipts extends CI_Model {
 	/**
 	 * Get a summary of the purchases of this year
 	 * 
+	 * - numberOfPurchases
+	 * - totalPrice
+	 * - totalDiscount
+	 * - numberOfShoppingTrips
+	 * - averagePrice
+	 * - averageShoppingTripPrice
+	 * - averageNumberOfPurchasesPerShoppingTrip
+	 * - mostExpensivePurchase
+	 * - mostExpensiveShoppingTrip
+	 * - cheapestPurchase
+	 * - cheapestShoppingTrip 
+	 * 
 	 * @param int $year
 	 * @return array
 	 */
 	public function getYearlySummary($year) {
 		$summary = array();
-		
+
 		$startdate = "{$year}-01-01 00:00:00";
 		$enddate = date($this->datetimeformat, strtotime("{$startdate} +1 year"));
-		$query = $this->db->query("SELECT count(id) as numberOfPurchases, sum(price) as totalPrice, sum(discount) as totalDiscount FROM items WHERE userid=? AND datetime BETWEEN ? AND ?", array($this->temporaryUserID, $startdate, $enddate));
 		
-		return $query->row();
+		// Purchase information
+		$query = $this->db->query("SELECT count(id) as numberOfPurchases, sum(price) as totalPrice, sum(discount) as totalDiscount, avg(price) as averagePrice, max(price) as mostExpensivePurchase, min(price) as cheapestPurchase FROM items WHERE userid=? AND datetime BETWEEN ? AND ?", array($this->temporaryUserID, $startdate, $enddate));		
+		$summary = $query->row_array();
+		
+		// Shopping trip information
+		$query = $this->db->query("SELECT count(numberOfItems) as numberOfShoppingTrips, avg(price) as averageShoppingTripPrice, max(price) as mostExpensiveShoppingTrip, min(price) as cheapestShoppingTrip, avg(numberOfItems) as averageNumberOfPurchasesPerShoppingTrip FROM (SELECT count(id) as numberOfItems, sum(price) as price FROM items WHERE userid=? AND datetime BETWEEN ? AND ? GROUP BY transaction) as trips", array($this->temporaryUserID, $startdate, $enddate));
+		$summary = array_merge($summary, $query->row_array());
+		
+		return $summary;
 	}
 	
 	/**
