@@ -25,6 +25,7 @@ class Receipts extends CI_Model {
 	public function newUploadedReceipt($filename) {
 		$this->load->library('csvreader');
 		$content = $this->csvreader->parse_file($filename);
+		$storeid = 1;
 		$userid = 1;
 
 		// ﻿Datum;Zeit;Filiale;Kassennummer;Transaktionsnummer;Artikel;Menge;Rabatt;Umsatz
@@ -39,16 +40,36 @@ class Receipts extends CI_Model {
 
 		if($count == 0){
 			foreach ($content as $value){
-				$transaction0 = 0;
 				// only real items (no cumulus points etc.)
 				if(floatval($value['Umsatz']) > 0){
+
+					// get storeid, if non-existent create one
+					$array = array('storename' => $value['Filiale']);
+					$this->db->where($array);
+					$this->db->from('stores');
+					$this->db->select('id');
+					$count = $this->db->count_all_results();
+					if($count == 0){
+						$data = array(
+							'storename' => $value['Filiale']
+						);
+						$this->db->insert('stores', $data);
+						$storeid = $this->db->insert_id();
+					}else{
+						$array = array('storename' => $value['Filiale']);
+						$this->db->where($array);
+						$this->db->select('id');
+						$query = $this->db->get('stores');
+						$row = $query->row();
+						$storeid = $row->id;
+					}
 					// var_dump($value); die();
 					$date = explode ('.', $value['﻿Datum']);
 					// datetime: e.g. 2012-03-22 18:09:59
 					$datetime = "20".$date[2]."-".$date[1]."-".$date[0]." ".$value['Zeit'].":00";
 					$data = array(
 						'datetime' => $datetime,
-						'storeid' => 1,
+						'storeid' => $storeid,
 						'transaction' => $value['Transaktionsnummer'],
 						'itemname' => $value['Artikel'],
 						'quantity' => $value['Menge'],
