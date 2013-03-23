@@ -39,6 +39,6 @@ body {
 	border-radius: 1em;
 }
 
-#chart svg {
-  height: 400px;
+.dashboard svg {
+  height: 300px;
 }

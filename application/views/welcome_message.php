@@ -59,8 +59,8 @@
 		</div>
 
         <div class="span3">
-          <h4>3. Open your data</h4>
-          <p>You are now ready to share your personal data with us. At the moment this application does not process uploads automatically, but if you are really eager to help, please send your CSV files <a href="mailto:data@cumulizer.eu">by email.</p>
+          <h4>3. Share your data</h4>
+          <p>You are now ready to share your personal data with us - anonymously. Your identity is not in the data extract, and we will not store any details about you. At the moment this application does not process uploads automatically, but if you are really eager to help, please send your CSV files <a href="mailto:data@cumulizer.eu">by email.</p>
           <center><img src="img/opendata-logo-RGB-onlyicon-nocircle.png" width="80"></center></a>
         </div>
 
@@ -70,8 +70,12 @@
       
       <div class="row-fluid dashboard">
       
-      	<div id="chart">
+      	<div id="chart-spending-stacked">
 			<svg></svg>
+		</div>
+		
+		<div id="chart-spending-pie">
+		  <svg></svg>
 		</div>
 		
       </div>

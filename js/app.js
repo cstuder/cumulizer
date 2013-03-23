@@ -23,7 +23,6 @@ $.get('index.php/api?action=spendings&year=2012&month=1', function(data) {
 	
 	chartdata = [ { "key": "Spendings", "values": spendings }];
 	
-
 	nv.addGraph(function() {
 	  var chart = nv.models.stackedAreaChart()
 		            .x(function(d) { return d[0] })
