@@ -86,4 +86,13 @@ class Maintenance extends CI_Controller
 
         return $return;
     }
+    
+    /**
+     * Geocodes all stores with missing location information
+     */
+    public function geocodestores() {
+    	$this->load->model('stores');
+    
+    	$this->stores->geocodeUnlocalizedStores();
+    }
 }
