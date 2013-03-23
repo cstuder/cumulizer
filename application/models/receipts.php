@@ -148,7 +148,7 @@ class Receipts extends CI_Model {
 		
 		return $categories;
 	}
-	
+
 	/**
 	 * Get all stores and their sales there
 	 * 
@@ -158,4 +158,36 @@ class Receipts extends CI_Model {
 		$query = $this->db->query('SELECT stores.storename, stores.lat, stores.lon, sum(items.price) as sales FROM stores, items WHERE stores.id=items.storeid GROUP BY items.storeid');
 		return $query->result();
 	}
+
+    public function getUncategorizedItems() {
+        $query = $this->db->query("
+            SELECT DISTINCT items.itemname
+            FROM items
+            LEFT JOIN autocategorizations ON (autocategorizations.itemname = items.itemname)
+            WHERE items.categoryid = 0
+            AND autocategorizations.id IS NULL
+        ");
+
+        $uncategorizedItemnames = array();
+        foreach($query->result() as $row) {
+            $uncategorizedItemnames[] = $row->itemname;
+        }
+
+        return $uncategorizedItemnames;
+    }
+
+    public function saveVotes(array $votes) {
+        foreach ($votes as $vote) {
+            $this->db->query("
+                INSERT INTO autocategorizations
+                    (categoryid, itemname, votes)
+                VALUES
+                    (" . (int)$vote['categoryId'] . ",
+                    '" . $this->db->escape_str($vote['itemName']) . "',
+                    " . (int)$vote['votes'] . ")
+                ON DUPLICATE KEY UPDATE
+                    votes=votes+" . (int)$vote['votes']
+            );
+        }
+    }
 }

@@ -8,6 +8,8 @@
 $this->load->view('_header');
 ?>
 <script src="<?php echo site_url('js/leaflet/leaflet.js'); ?>"></script>
+<script src="<?php echo site_url('js/heatcanvas/heatcanvas.js'); ?>"></script>
+<script src="<?php echo site_url('js/heatcanvas/heatcanvas-leaflet.js'); ?>"></script>
 
 <script>
 
@@ -19,8 +21,20 @@ $(document).ready(function() {
 	L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
 	    attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a>, &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 	}).addTo(map);
-
 	
+	$.getJSON('<?php echo site_url('api'); ?>?action=stores', function(data) {
+	    var heatmap = new L.TileLayer.HeatCanvas({},{
+	        'step':0.5,
+	        'degree':HeatCanvas.LINEAR,
+	        'opacity':0.7
+	    });
+	    
+		$.each(data, function(index, value) {
+			heatmap.pushData(value.lat, value.lon, value.sales);
+		});
+		
+	    map.addLayer(heatmap);
+	});
 });
 
 </script>
