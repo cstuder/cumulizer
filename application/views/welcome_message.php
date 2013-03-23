@@ -39,7 +39,7 @@
       <hr>
 
       <div class="jumbotron">
-        <h1>Liberate your shopping!</h1>
+        <h1>Liberate your shopping data!</h1>
         <p class="lead">This is a <a href="http://make.opendata.ch/wiki/event:2013-03" target="_blank">Make OpenData.ch</a> project aiming to analyze personal data on purchases. We have started by aggregating our own personal data <b>anonymously</b> from the Cumulus purchase points program run by Migros, which is <b>data that we the customers should be able to use and reuse</b>.</p>
         <a class="btn btn-large btn-success btn-opendata" href="#">Open your data</a>
       </div>
