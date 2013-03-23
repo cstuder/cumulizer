@@ -166,8 +166,14 @@ class Receipts extends CI_Model {
 		
 		$startdate = "{$startyear}-{$startmonth}-01 00:00:00";
 		$enddate = date($this->datetimeformat, strtotime("{$startdate} + {$numberOfMonths} months"));
-		
-		$query = $this->db->query("SELECT sum(price) as pricesum, categoryid, EXTRACT(YEAR FROM `datetime`) as year, EXTRACT(MONTH FROM `datetime`) as month FROM items WHERE userid=? AND datetime BETWEEN ? AND ? GROUP BY month, year, categoryid", array($this->temporaryUserID, $startdate, $enddate));
+
+        //TODO: '0 AS categoryId' is a quick hack to get it to work, this'll need to do something similiar to what getMonthlyPurchase does
+		$query = $this->db->query("
+		    SELECT sum(price) as pricesum, 0 AS categoryid, EXTRACT(YEAR FROM `datetime`) as year, EXTRACT(MONTH FROM `datetime`) as month
+		    FROM items
+		    WHERE userid=? AND datetime BETWEEN ? AND ?
+		    GROUP BY month, year, categoryid"
+            , array($this->temporaryUserID, $startdate, $enddate));
 		
 		return $query->result();
 	}
