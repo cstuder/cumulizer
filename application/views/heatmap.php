@@ -24,13 +24,13 @@ $(document).ready(function() {
 	
 	$.getJSON('<?php echo site_url('api'); ?>?action=stores', function(data) {
 	    var heatmap = new L.TileLayer.HeatCanvas({},{
-	        'step':0.5,
-	        'degree':HeatCanvas.LINEAR,
-	        'opacity':0.7
+	    	'radius': 5
 	    });
 	    
 		$.each(data, function(index, value) {
-			heatmap.pushData(value.lat, value.lon, value.sales);
+			if(value.lat != null && value.lon != null) {	
+				heatmap.pushData(value.lat, value.lon, value.sales);
+			}
 		});
 		
 	    map.addLayer(heatmap);

@@ -10,7 +10,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>Cumulizer upload form</title>
+<title>Cumulizer</title>
 <link rel="stylesheet" href="<?php echo site_url('css/bootstrap.min.css'); ?>" />
 <link rel="stylesheet" href="<?php echo site_url('js/leaflet/leaflet.css'); ?>" />
 <!--[if lte IE 8]>
