@@ -10,7 +10,7 @@
 # Erstellungsdauer: 2013-03-22 14:49:32 +0000
 # ************************************************************
 
-
+USE cumulizer;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
