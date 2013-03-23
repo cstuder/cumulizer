@@ -1,0 +1,12 @@
+{
+    "name": "cstuder/cumulizer",
+    "authors": [
+        {
+            "name": "Colin Frei",
+            "email": "colin.frei@liip.ch"
+        }
+    ],
+    "require": {
+        "guzzle/guzzle": "~3.1"
+    }
+}
