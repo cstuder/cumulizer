@@ -84,6 +84,14 @@ class Api extends CI_Controller {
 	public function action_categories() {
 		return $this->receipts->getCategories();
 	}
+	
+	/**
+	 * Get stores and their sales
+	 * 
+	 */
+	public function action_stores() {
+		return $this->receipts->getStoresAndMoney();
+	}
 
 	/**
 	 * Helper method: Output data as JSON

@@ -148,4 +148,14 @@ class Receipts extends CI_Model {
 		
 		return $categories;
 	}
+	
+	/**
+	 * Get all stores and their sales there
+	 * 
+	 * @return array
+	 */
+	public function getStoresAndMoney() {
+		$query = $this->db->query('SELECT stores.storename, stores.lat, stores.lon, sum(items.price) as sales FROM stores, items WHERE stores.id=items.storeid GROUP BY items.storeid');
+		return $query->result();
+	}
 }
