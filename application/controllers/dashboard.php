@@ -24,6 +24,10 @@ class Dashboard extends CI_Controller {
 		$this->load->view('welcome_message');
 	}
 	
+	/**
+	 * Shows a simple upload form to add single files to the database
+	 * 
+	 */
 	public function simpleupload()
 	{
 		// Check for upload
@@ -42,7 +46,15 @@ class Dashboard extends CI_Controller {
 			$message = $this->upload->display_errors();
 		}
 		
-		$this->load->view('simpleuploadform.php', array('message' => $message));
+		$this->load->view('simpleuploadform', array('message' => $message));
+	}
+	
+	/**
+	 * Shows a heatmap with the sales
+	 */
+	public function heatmap()
+	{
+		$this->load->view('heatmap');
 	}
 }
 
