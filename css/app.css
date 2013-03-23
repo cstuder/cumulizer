@@ -12,6 +12,15 @@ body {
 	margin: 30px 0;
 }
 
+.logo {
+	font-size:0px;
+	text-indent:-9999px;
+	width:200px;
+	height:30px;
+	background:url('../img/logo.png') no-repeat;
+	background-size:100%;
+}
+
 /* Main message and sign up button */
 .jumbotron {
 	margin: 60px 0;

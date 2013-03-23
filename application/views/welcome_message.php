@@ -33,7 +33,7 @@
           <li><a href="http://make.opendata.ch/wiki/project:cumulizer">About</a></li>
           <li><a href="http://make.opendata.ch/forum">Contact</a></li>
         </ul>
-        <h3 class="muted">Cumulizer</h3>
+        <h3 class="muted logo">Cumulizer</h3>
       </div>
 
       <hr>
@@ -60,8 +60,12 @@
 
         <div class="span3">
           <h4>3. Share your data</h4>
-          <p>You are now ready to share your personal data with us - anonymously. Your identity is not in the data extract, and we will not store any details about you. At the moment this application does not process uploads automatically, but if you are really eager to help, please send your CSV files <a href="mailto:data@cumulizer.eu">by email.</p>
-          <center><img src="img/opendata-logo-RGB-onlyicon-nocircle.png" width="80"></center></a>
+          <p>You are now ready to share your personal data with us - anonymously. Your identity is not in the data extract, and we will not store any details about you. At the moment this application does not process uploads automatically, but if you are really eager to help, please send your CSV files <a href="mailto:data@cumulizer.eu">by email</a>.</p>
+        </div>
+        
+        <div class="span2">
+        	<a href="mailto:data@cumulizer.eu">
+          <img src="img/open-shopping.png" vspace="30"></a>
         </div>
 
       </div>
