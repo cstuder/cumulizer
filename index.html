@@ -8,6 +8,7 @@
     <meta name="author" content="Christian Studer, Martin Vögeli, Oleg Lavrovsky">
 
     <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./js/nvd3/nv.d3.css" rel="stylesheet">
     <link href="./css/app.css" rel="stylesheet">
     <link href="./css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -47,26 +48,38 @@
    	
       	<div class="span12">
       		<button type="button" class="close" data-dismiss="alert">&times;</button>
-      		<h3>Getting started</h3>
+      		<h3>Getting your data</h3>
       	</div>
       	
         <div class="span3">
-          <h4>1. Get your data</h4>
-          <p>Log into the Cumulus program using your customer number and a password on a paper mail-out to create an M-Connect account if you have not already.</p>
+          <h4>1. Access your account</h4>
+          <p>Log into the <a href="http://www.migros.ch/cumulus/de/secure/punktestand.html" class="urlextern" title="http://www.migros.ch/cumulus/de/secure/punktestand.html" rel="nofollow">Cumulus program</a> using your customer number and a password on a paper mail-out to create an M-Connect account if you have not already.</p>
+          <a href="http://make.opendata.ch/wiki/_detail/project:finance:cumulus-howto.png?id=project%3Acumulizer" class="media" title="project:finance:cumulus-howto.png"><img src="http://make.opendata.ch/wiki/_media/project:finance:cumulus-howto.png?w=100" class="media" alt="" width="200" border="1"></a>
 		</div>
 
         <div class="span3">
-          <h4>2. Share it anonymously</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+          <h4>2. Download receipts</h4>
+          <p>Under <strong>Mein Konto - Kassenbons</strong> you can browse and view details of your <a href="https://www.migros.ch/cumulus/de/secure/kassenbons.html" class="urlextern" title="https://www.migros.ch/cumulus/de/secure/kassenbons.html" rel="nofollow">shopping receipts</a>. Browsing month-by-month, and for every page, you need to click <strong>Alle</strong>, and then <strong>Ausgewählte Kassenbons als Excel-Liste (csv)</strong> (not “Übersicht”) to download a file with the details for those shopping trips.</p>
 		</div>
 
         <div class="span3">
-          <h4>3. Use our tools</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+          <h4>3. Open your data</h4>
+          <p>You are now ready to share your personal data with us. At the moment this application does not process uploads automatically, but if you are really eager to help, please send your CSV files <a href="mailto:cumulizer@utou.ch">by email.</p>
+          <center><img src="img/opendata-logo-RGB-onlyicon-nocircle.png" width="80"></center></a>
         </div>
 
       </div>
 
+      <hr>
+      
+      <div class="row-fluid dashboard">
+      
+      	<div id="chart">
+			<svg></svg>
+		</div>
+		
+      </div>
+      
       <hr>
 
       <div class="footer">
@@ -76,6 +89,7 @@
     </div> <!-- /container -->
 
     <script src="./js/jquery.min.js"></script>
+    <!--
     <script src="./js/bootstrap-transition.js"></script>
     <script src="./js/bootstrap-alert.js"></script>
     <script src="./js/bootstrap-modal.js"></script>
@@ -88,6 +102,11 @@
     <script src="./js/bootstrap-collapse.js"></script>
     <script src="./js/bootstrap-carousel.js"></script>
     <script src="./js/bootstrap-typeahead.js"></script>
+    -->
+    
+    <script src="js/nvd3/lib/d3.v2.min.js"></script>
+    <script src="js/nvd3/lib/fisheye.js"></script>
+    <script src="js/nvd3/nv.d3.min.js"></script>
     
     <script src="./js/app.js"></script>
 
