@@ -89,7 +89,13 @@ class Receipts extends CI_Model {
 	public function getMonthlyPurchases($year, $month) {
 		$startdate = "{$year}-{$month}-01 00:00:00";
 		$enddate = date($this->datetimeformat, strtotime("{$startdate} + 1 month"));
-		$query = $this->db->query("SELECT datetime, itemname, quantity, discount, price, categoryid FROM items WHERE userid = ? AND datetime BETWEEN ? AND ?", array($this->temporaryUserID, $startdate, $enddate));
+		$query = $this->db->query("
+		    SELECT items.datetime, items.quantity, items.discount, items.price, items.categoryid, product.itemname
+		    FROM items
+		    INNER JOIN product ON (product.id = items.product)
+		    WHERE userid = ? AND datetime BETWEEN ? AND ?",
+            array($this->temporaryUserID, $startdate, $enddate)
+        );
 		
 		return $query->result();
 	}
