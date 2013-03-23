@@ -1,4 +1,5 @@
 <?php
+
 class Receipts extends CI_Model {
 	/**
 	 * Temporary fixed user ID until we get multiuser support
