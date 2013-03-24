@@ -76,21 +76,25 @@
       
       	<div class="span2">
 		  	<ul class="nav nav-list">
-			  <li class="nav-header">Sample data</li>
+			  <li class="nav-header">Dashboard</li>
 			  <li class="active"><a href="#chart-spending-stacked">Spending over time</a></li>
 			  <li><a href="#chart-category-pie">Purchases by category</a></li>
 			  <li><a href="#stores-heatmap">Heatmap of store usage</a></li>
 	  		</ul>
       	</div>
       
-      	<div class="span10 tab-content">
+      	<div class="tab-content">
       		
 		  	<div id="chart-spending-stacked" class="tab-pane active">
 				<svg></svg>
 			</div>
 			
 			<div id="chart-category-pie" class="tab-pane">
-			  <svg></svg>
+				<div class="span7"><svg></svg></div>
+				<div class="span3">
+					<p><span class="badge badge-warning">&#9733;</span></p>
+					<p>We are still working on a way of classifying the products by category - it is rather tricky with the information we get. The chart is random. Drop us a line if you can help.</p>
+				</div>
 			</div>
 			
 			<div id="stores-heatmap" class="tab-pane">
@@ -135,7 +139,7 @@
     
     <script src="js/nvd3/lib/d3.v2.min.js"></script>
     <script src="js/nvd3/lib/fisheye.js"></script>
-    <script src="js/nvd3/nv.d3.js"></script>
+    <script src="js/nvd3/nv.d3.min.js"></script>
     
     <script src="./js/app.js"></script>
 
