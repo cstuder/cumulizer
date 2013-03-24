@@ -17,6 +17,9 @@ body {
 	text-indent:-9999px;
 	width:200px;
 	height:30px;
+	position: relative;
+	top: 21px;
+	left: 10px;
 	background:url('../img/logo.png') no-repeat;
 	background-size:100%;
 }
@@ -29,8 +32,12 @@ body {
 .jumbotron h1 {
 	font-size: 72px;
 	line-height: 1;
-	background: url(http://farm9.staticflickr.com/8148/7269286468_a932e1653b_k.jpg) no-repeat center;
-	padding-top: 157px;
+	background: url(http://farm1.staticflickr.com/11/17389724_14c283b01d_b.jpg) no-repeat center 44%;
+	background-size:100%;
+	text-shadow: 0.03em 0.03em #333;
+	padding-top: 77px;
+	padding-bottom: 20px;
+	border-radius: 10px;
 	color: white;
 }
 .jumbotron .btn {

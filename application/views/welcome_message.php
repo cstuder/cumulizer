@@ -31,7 +31,7 @@
         <ul class="nav nav-pills pull-right">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="http://make.opendata.ch/wiki/project:cumulizer">About</a></li>
-          <li><a href="http://make.opendata.ch/forum">Contact</a></li>
+          <li><a href="mailto:data@cumulizer.eu">Contact</a></li>
         </ul>
         <h3 class="muted logo">Cumulizer</h3>
       </div>
@@ -39,9 +39,9 @@
       <hr>
 
       <div class="jumbotron">
-        <h1>Liberate your shopping data!</h1>
-        <p class="lead">This is a <a href="http://make.opendata.ch/wiki/event:2013-03" target="_blank">Make OpenData.ch</a> project aiming to analyze personal data on purchases. We have started by aggregating our own personal data <b>anonymously</b> from the Cumulus purchase points program run by Migros, which is <b>data that we the customers should be able to use and reuse</b>.</p>
-        <a class="btn btn-large btn-success btn-opendata" href="#">Open your data</a>
+        <h1>Your personal shopping analyzer</h1>
+        <p class="lead">This project aims to open and make use of personal data on purchases. We can help you download your shopping receipts through the <a href="http://migros.ch/cumulus">Cumulus</a> program run by <a href="http://migros.ch">Migros</a> and visualize how you spend your money on groceries.</p>
+        <a class="btn btn-large btn-success btn-opendata" href="#">How to open your data</a>
       </div>
 
       <div class="row-fluid box box-howto hidden">
@@ -60,7 +60,7 @@
 
         <div class="span3">
           <h4>3. Share your data</h4>
-          <p>You are now ready to share your personal data with us - anonymously. Your identity is not in the data extract, and we will not store any details about you. At the moment this application does not process uploads automatically, but if you are really eager to help, please send your CSV files <a href="mailto:data@cumulizer.eu">by email</a>.</p>
+          <p>You are now ready to share your personal data with us - <b>anonymously</b>. Your identity is not in the data extract, and we will not store any details about you. At the moment we are not ready to process uploads automatically, but if you would like to participate at this early stage, please send your CSV files <a href="mailto:data@cumulizer.eu">by email</a>.</p>
         </div>
         
         <div class="span2">
