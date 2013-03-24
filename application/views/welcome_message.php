@@ -74,26 +74,45 @@
       
       <div class="row-fluid dashboard">
       
-      	<div id="chart-spending-stacked">
-			<svg></svg>
+      	<div class="span2">
+		  	<ul class="nav nav-list">
+			  <li class="nav-header">Sample data</li>
+			  <li class="active"><a href="#chart-spending-stacked">Spending over time</a></li>
+			  <li><a href="#chart-category-pie">Purchases by category</a></li>
+			  <li><a href="#stores-heatmap">Heatmap of store usage</a></li>
+	  		</ul>
+      	</div>
+      
+      	<div class="span10 tab-content">
+      		
+		  	<div id="chart-spending-stacked" class="tab-pane active">
+				<svg></svg>
+			</div>
+			
+			<div id="chart-category-pie" class="tab-pane">
+			  <svg></svg>
+			</div>
+			
+			<div id="stores-heatmap" class="tab-pane">
+			  <iframe src="dashboard/heatmap" width="100%" height="740" frameborder="0"></iframe>
+			</div>
+		
 		</div>
 		
 	</div>
 	
 	<div class="row-fluid">
-		
-		<iframe src="dashboard/heatmap" width="100%" height="740" frameborder="0"></iframe>
-		
-		<!--<div id="chart-spending-pie">
-		  <svg></svg>
-		</div>-->
-		
-      </div>
       
       <hr>
 
       <div class="footer">
-        <p>By Christian Studer, Martin Vögeli, Oleg Lavrovsky</p>
+      	<p style="float:right;width:20em;"><a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">Cumulizer</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.</p>
+      
+        <p>&copy; 2013 Christian Studer, Martin Vögeli, Oleg Lavrovsky</p>
+        
+        <p><a href="http://www.flickr.com/photos/squeegeed/17389724/">Photo</a> <span class="ccIcn ccIcnSmall"><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/"><img src="http://l.yimg.com/g/images/cc_icon_attribution_small.gif" border="0" alt="Attribution" title="Attribution"><img src="http://l.yimg.com/g/images/cc_icon_noncomm_small.gif" border="0" alt="Noncommercial" title="Noncommercial"><img src="http://l.yimg.com/g/images/cc_icon_noderivs_small.gif" border="0" alt="No Derivative Works" title="No Derivative Works"></a></span>
+ <a href="http://creativecommons.org/licenses/by-nc-nd/2.0/" title="Attribution-NonCommercial-NoDerivs License">Some rights reserved</a> by <a href="/photos/squeegeed/">squeegeed</a></p>
+        
       </div>
 
     </div> <!-- /container -->
@@ -116,7 +135,7 @@
     
     <script src="js/nvd3/lib/d3.v2.min.js"></script>
     <script src="js/nvd3/lib/fisheye.js"></script>
-    <script src="js/nvd3/nv.d3.min.js"></script>
+    <script src="js/nvd3/nv.d3.js"></script>
     
     <script src="./js/app.js"></script>
 

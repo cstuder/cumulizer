@@ -10,29 +10,51 @@ $('button.close').click(function() {
 	return false;
 });
 
+$('.nav-list a').click(function (e) {
+  e.preventDefault();
+  var target = $($(this).attr('href'));
+  target.parent().find('.tab-pane').hide();
+  target.show();
+  $(this).parents('.nav-list').find('.active').removeClass('active');
+  $(this).parent().addClass('active');
+});
+
 $.get('index.php/api?action=categories', function(data) {
-	return;
-	var chartdata = [ { key: "Categories", values: [] } ];
+   
+	var chartdata = [];
 	
 	for (var i = 2; i < 12; i++) {
-		chartdata[0].values.push({
-			"label": data[i],
-			"value": Math.random() * 100
+		chartdata.push({
+			key: data[i],
+			y: Math.random() * 20
 		});
 	}
-	
+   
+	var chart;
 	nv.addGraph(function() {
-	  var chart = nv.models.pieChart()
-		  .x(function(d) { return d.label })
-		  .y(function(d) { return d.value })
-		  .showLabels(true);
+		var width = 500,
+		    height = 300;
 
-		d3.select("#chart-spending-pie svg")
-		    .datum(chartdata)
-		  .transition().duration(1200)
-		    .call(chart);
+		chart = nv.models.pieChart()
+		    .x(function(d) { return d.key })
+		    .y(function(d) { return d.y })
+		    //.showLabels(false)
+		    .showLegend(false)
+		    .values(function(d) { return d })
+		    .color(d3.scale.category10().range())
+		    .width(width)
+		    .height(height);
 
-	  return chart;
+		  d3.select("#chart-category-pie svg")
+		      .datum([chartdata])
+		    .transition().duration(1200)
+		      .attr('width', width)
+		      .attr('height', height)
+		      .call(chart);
+
+		chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
+
+		return chart;
 	});
 
 });
