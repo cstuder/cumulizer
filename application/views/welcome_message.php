@@ -115,7 +115,7 @@
         <p>&copy; 2013 Christian Studer, Martin Vögeli, Oleg Lavrovsky</p>
         
         <p><a href="http://www.flickr.com/photos/squeegeed/17389724/">Photo</a> <span class="ccIcn ccIcnSmall"><a href="http://creativecommons.org/licenses/by-nc-nd/2.0/"><img src="http://l.yimg.com/g/images/cc_icon_attribution_small.gif" border="0" alt="Attribution" title="Attribution"><img src="http://l.yimg.com/g/images/cc_icon_noncomm_small.gif" border="0" alt="Noncommercial" title="Noncommercial"><img src="http://l.yimg.com/g/images/cc_icon_noderivs_small.gif" border="0" alt="No Derivative Works" title="No Derivative Works"></a></span>
- <a href="http://creativecommons.org/licenses/by-nc-nd/2.0/" title="Attribution-NonCommercial-NoDerivs License">Some rights reserved</a> by <a href="/photos/squeegeed/">squeegeed</a></p>
+ <a href="http://creativecommons.org/licenses/by-nc-nd/2.0/" title="Attribution-NonCommercial-NoDerivs License">Some rights reserved</a> by <a href="http://www.flickr.com/photos/squeegeed">squeegeed</a></p>
         
       </div>
 
